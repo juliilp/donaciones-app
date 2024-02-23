@@ -30,8 +30,14 @@ const UserModel = new Schema({
     default: false,
   },
   fotoPerfil: {
-    type: String,
-    default: "",
+    public_id: {
+      type: String,
+      default: "",
+    },
+    secure_url: {
+      type: String,
+      default: "",
+    },
   },
   datos: {
     type: Array,

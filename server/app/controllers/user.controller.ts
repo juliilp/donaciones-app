@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User.model";
 import { compare, hash } from "bcryptjs";
-import IUser from "../interfaces/User.interface";
 import createToken from "../utils/createToken";
-import DatosModel from "../models/Datos.model";
-
+import { uploadImagen, deleteImagen } from "../utils/cloudinary";
+import fs from "fs-extra";
 const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -69,4 +68,33 @@ const allUsers = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
-export { login, createUser, allUsers };
+
+const editarPerfil = async (req: Request, res: Response) => {
+  const { descripcion, motivoDonacion, nombre } = req.body;
+  const { id } = req.params;
+  await UserModel.findByIdAndUpdate(id, {
+    descripcion,
+    motivoDonacion,
+    nombre,
+  });
+
+  if (req.files?.image) {
+    if (Array.isArray(req.files.image)) {
+    } else {
+      const result = await uploadImagen(req.files.image.tempFilePath);
+
+      await UserModel.findByIdAndUpdate(id, {
+        fotoPerfil: {
+          public_id: result.public_id,
+          secure_url: result.secure_url,
+        },
+      });
+
+      await fs.unlink(req.files.image.tempFilePath);
+    }
+  }
+
+  res.json({ message: "Perfil editado" });
+};
+
+export { login, createUser, allUsers, editarPerfil };
