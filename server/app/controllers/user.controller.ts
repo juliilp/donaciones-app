@@ -101,4 +101,11 @@ const editarPerfil = async (req: Request, res: Response) => {
   }
 };
 
-export { login, createUser, allUsers, editarPerfil };
+const perfilUser = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+export { login, createUser, allUsers, editarPerfil, perfilUser };
