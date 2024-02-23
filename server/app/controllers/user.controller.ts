@@ -30,7 +30,7 @@ const login = async (req: Request, res: Response) => {
       email: findUser.email,
     });
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 };
 
@@ -56,7 +56,7 @@ const createUser = async (req: Request, res: Response) => {
     const token = await createToken({ id: createUser._id });
     res.status(200).json(token);
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 };
 
@@ -65,36 +65,40 @@ const allUsers = async (req: Request, res: Response) => {
     const allUser = await UserModel.find({});
     res.status(200).json(allUser);
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 };
 
 const editarPerfil = async (req: Request, res: Response) => {
-  const { descripcion, motivoDonacion, nombre } = req.body;
-  const { id } = req.params;
-  await UserModel.findByIdAndUpdate(id, {
-    descripcion,
-    motivoDonacion,
-    nombre,
-  });
+  try {
+    const { descripcion, motivoDonacion, nombre } = req.body;
+    const { id } = req.params;
+    await UserModel.findByIdAndUpdate(id, {
+      descripcion,
+      motivoDonacion,
+      nombre,
+    });
 
-  if (req.files?.image) {
-    if (Array.isArray(req.files.image)) {
-    } else {
-      const result = await uploadImagen(req.files.image.tempFilePath);
+    if (req.files?.image) {
+      if (Array.isArray(req.files.image)) {
+      } else {
+        const result = await uploadImagen(req.files.image.tempFilePath);
 
-      await UserModel.findByIdAndUpdate(id, {
-        fotoPerfil: {
-          public_id: result.public_id,
-          secure_url: result.secure_url,
-        },
-      });
+        await UserModel.findByIdAndUpdate(id, {
+          fotoPerfil: {
+            public_id: result.public_id,
+            secure_url: result.secure_url,
+          },
+        });
 
-      await fs.unlink(req.files.image.tempFilePath);
+        await fs.unlink(req.files.image.tempFilePath);
+      }
     }
-  }
 
-  res.json({ message: "Perfil editado" });
+    res.json({ message: "Perfil editado" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
 };
 
 export { login, createUser, allUsers, editarPerfil };
