@@ -1,9 +1,9 @@
 import { Router } from "express";
 import userRouter from "./userRouter.route";
-import mercadopago from "./mercadopago.route";
+import datosRouter from "./datosRouter.route";
 
 const routes = Router();
 
 routes.use("/user", userRouter);
-routes.use("/mercadopago", mercadopago);
+routes.use("/datos", datosRouter);
 export default routes;

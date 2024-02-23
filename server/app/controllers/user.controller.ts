@@ -3,6 +3,7 @@ import UserModel from "../models/User.model";
 import { compare, hash } from "bcryptjs";
 import IUser from "../interfaces/User.interface";
 import createToken from "../utils/createToken";
+import DatosModel from "../models/Datos.model";
 
 const login = async (req: Request, res: Response) => {
   try {
@@ -47,7 +48,6 @@ const createUser = async (req: Request, res: Response) => {
     }
 
     const hashPassword = await hash(password, 10);
-
     const createUser = await UserModel.create({
       nombre,
       email,

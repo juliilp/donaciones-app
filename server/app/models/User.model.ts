@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const UserModel = new Schema({
   nombre: {
@@ -32,6 +32,10 @@ const UserModel = new Schema({
   fotoPerfil: {
     type: String,
     default: "",
+  },
+  datos: {
+    type: Array,
+    default: [],
   },
 });
 
