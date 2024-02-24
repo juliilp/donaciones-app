@@ -8,7 +8,7 @@ import cors from "cors";
 dotenv.config();
 const app: Express = express();
 
-app.use(cors({ credentials: true, origin: "http://localhost:5173/" }));
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(
   fileUpload({
     useTempFiles: true,
