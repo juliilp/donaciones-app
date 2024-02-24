@@ -20,9 +20,10 @@ const login = async (req: Request, res: Response) => {
     const token = await createToken({ id: findUser._id });
 
     res.cookie("userLoginToken", token, {
-      sameSite: "none",
+      sameSite: "lax",
       secure: false,
       domain: "localhost",
+      httpOnly: true,
     });
     res.status(200).json({
       message: "Usuario logueado",
