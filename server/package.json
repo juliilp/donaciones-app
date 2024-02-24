@@ -21,7 +21,8 @@
     "express-fileupload": "^1.4.3",
     "fs-extra": "^11.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.2.0"
+    "mongoose": "^8.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
