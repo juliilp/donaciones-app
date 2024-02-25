@@ -38,7 +38,7 @@ const loginValidation = (req: Request, res: Response, next: NextFunction) => {
     email: z.string().email({ message: "El email no es válido" }),
     nombre: z
       .string()
-      .length(3, { message: "Minimo 3 letras" })
+      .min(3, { message: "Minimo 3 letras" })
       .max(8, { message: "Máximo 8 letras" }),
   });
 
@@ -71,10 +71,7 @@ const editarPerfilValidation = (
     motivoDonacion: z
       .string()
       .max(100, { message: "Máximo se permiten 100 caracteres" }),
-    nombre: z
-      .string()
-      .min(3, { message: "Minimo se permiten 3 caracteres" })
-      .max(8, { message: "Máximo se permiten 8 caracteres" }),
+    nombre: z.string().max(8, { message: "Máximo se permiten 8 caracteres" }),
   });
 
   try {
