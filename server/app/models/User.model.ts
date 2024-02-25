@@ -36,7 +36,8 @@ const UserModel = new Schema({
     },
     secure_url: {
       type: String,
-      default: "",
+      default:
+        "https://res.cloudinary.com/dnlxeeahh/image/upload/v1708893266/donaciones-app/jpbjzy939nufpnyykkv9.jpg",
     },
   },
   datos: {
