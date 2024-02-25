@@ -8,10 +8,12 @@ import Home from "./vistas/Home";
 import DashBoard from "./vistas/DashBoard";
 import Perfil from "./vistas/Perfil";
 import axios from "axios";
+import Header from "./components/Header/Header";
 axios.defaults.baseURL = "http://localhost:3001";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/registro" element={<Registro />} />
