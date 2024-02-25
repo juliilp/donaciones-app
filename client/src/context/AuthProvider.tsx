@@ -47,18 +47,23 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const handlerLogin: SubmitHandler<FieldValues> = async (
     data: FieldValues
   ) => {
-    const result = await axios.post(
-      "/user/login",
-      {
-        email: data.email,
-        password: data.password,
-      },
-      { withCredentials: true }
-    );
-    setUser(result.data);
-    setIsAuthenticate(true);
-    if (result.status === 200) {
-      navigate("/");
+    try {
+      const result = await axios.post(
+        "/user/login",
+        {
+          email: data.email,
+          password: data.password,
+        },
+        { withCredentials: true }
+      );
+      setUser(result.data);
+      setIsAuthenticate(true);
+      if (result.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
+      setUser(null);
+      setIsAuthenticate(false);
     }
   };
 
