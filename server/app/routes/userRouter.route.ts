@@ -6,6 +6,7 @@ import {
   editarPerfil,
   perfilUser,
   verifyToken,
+  logout,
 } from "../controllers/user.controller";
 import authRequired from "../middlewares/authRequired";
 import {
@@ -22,4 +23,5 @@ userRouter.get("/allUser", allUsers);
 userRouter.put("/:id", editarPerfil);
 userRouter.get("/perfil", authRequired, perfilUser);
 userRouter.get("/verify", verifyToken);
+userRouter.get("/logout", logout);
 export default userRouter;
