@@ -18,6 +18,6 @@ const userRouter = Router();
 userRouter.post("/createUser", createUserValidation, createUser);
 userRouter.post("/login", loginValidation, login);
 userRouter.get("/allUser", allUsers);
-userRouter.put("/:id", editarPerfilValidation, editarPerfil);
+userRouter.put("/:id", editarPerfil);
 userRouter.get("/perfil", authRequired, perfilUser);
 export default userRouter;
