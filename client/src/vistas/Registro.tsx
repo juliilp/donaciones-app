@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Registro() {
   const {
@@ -7,7 +8,7 @@ export default function Registro() {
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     const res = await axios.post(
@@ -20,6 +21,7 @@ export default function Registro() {
       { withCredentials: true }
     );
     console.log(res);
+    navigate("/");
   };
   return (
     <section className="w-full h-screen flex justify-center items-center">
