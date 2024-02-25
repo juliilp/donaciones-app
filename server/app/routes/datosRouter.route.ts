@@ -13,6 +13,6 @@ const datosRouter = Router();
 datosRouter.post("/", authRequired, createDatos);
 datosRouter.put("/:id", authRequired, updateDatos);
 datosRouter.delete("/:id", authRequired, deleteDatos);
-datosRouter.get("/all", authRequired, getAllDatos);
+datosRouter.get("/all", getAllDatos);
 datosRouter.get("/", authRequired, getDatos);
 export default datosRouter;
