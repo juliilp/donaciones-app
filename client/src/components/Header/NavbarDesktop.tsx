@@ -10,9 +10,17 @@ export default function NavbarDesktop() {
       {isAuthenticate ? (
         <ul className="hidden md:flex items-center w-full justify-around px-6 my-4">
           <li>
-            <img src={user?.foto.secure_url} alt="ImagenPerfil" />
+            <Link to="/perfil">
+              <img
+                src={user?.foto.secure_url}
+                alt="ImagenPerfil"
+                className="rounded-full size-16"
+              />
+            </Link>
           </li>
-          <li>{user?.nombre}</li>
+          <Link to="/perfil">
+            <li>{user?.nombre}</li>
+          </Link>
           <li>
             <button onClick={handlerCerrarSesion}>Cerrar sesion</button>
           </li>
