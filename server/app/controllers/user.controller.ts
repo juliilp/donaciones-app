@@ -3,6 +3,7 @@ import UserModel from "../models/User.model";
 import { compare, hash } from "bcryptjs";
 import createToken from "../utils/createToken";
 import { uploadImagen, deleteImagen } from "../utils/cloudinary";
+import jwt from "jsonwebtoken";
 import fs from "fs-extra";
 const login = async (req: Request, res: Response) => {
   try {
@@ -22,8 +23,6 @@ const login = async (req: Request, res: Response) => {
     res.cookie("userLoginToken", token, {
       sameSite: "lax",
       secure: false,
-      domain: "localhost",
-      httpOnly: true,
     });
     res.status(200).json({
       message: "Usuario logueado",
@@ -109,4 +108,22 @@ const perfilUser = async (req: Request, res: Response) => {
     res.status(400).json(error);
   }
 };
-export { login, createUser, allUsers, editarPerfil, perfilUser };
+
+const verifyToken = (req: Request, res: Response) => {
+  const { userLoginToken } = req.cookies;
+  console.log({ token: userLoginToken });
+  if (!userLoginToken) return res.status(401).json({ message: "No hay token" });
+
+  jwt.verify(userLoginToken, "token123", async (err: any, user: any) => {
+    if (err) return res.status(401).json(err);
+
+    const findUser = await UserModel.findById(user.id);
+    if (findUser === null) return;
+    res.status(200).json({
+      nombre: findUser.nombre,
+      email: findUser.email,
+      foto: findUser.fotoPerfil,
+    });
+  });
+};
+export { login, createUser, allUsers, editarPerfil, perfilUser, verifyToken };
