@@ -4,13 +4,15 @@ import {
   updateDatos,
   deleteDatos,
   getAllDatos,
+  getDatos,
 } from "../controllers/datos.controller";
 import authRequired from "../middlewares/authRequired";
 
 const datosRouter = Router();
 
-datosRouter.post("/create", authRequired, createDatos);
-datosRouter.put("/edit/:id", authRequired, updateDatos);
-datosRouter.delete("/delete/:id", authRequired, deleteDatos);
-datosRouter.get("/allDatos", authRequired, getAllDatos);
+datosRouter.post("/", authRequired, createDatos);
+datosRouter.put("/:id", authRequired, updateDatos);
+datosRouter.delete("/:id", authRequired, deleteDatos);
+datosRouter.get("/all", authRequired, getAllDatos);
+datosRouter.get("/", authRequired, getDatos);
 export default datosRouter;
