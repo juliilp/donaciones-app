@@ -1,13 +1,11 @@
 import NavbarMobile from "./NavbarMobile";
 import NavbarDesktop from "./NavbarDesktop";
-import useAuth from "../../hooks/useAuth";
-export default function Header() {
-  const { user } = useAuth();
 
+export default function Header() {
   return (
     <header>
-      <NavbarMobile user={user} />
-      <NavbarDesktop user={user} />
+      <NavbarMobile />
+      <NavbarDesktop />
     </header>
   );
 }
