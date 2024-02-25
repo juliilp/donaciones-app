@@ -1,26 +1,24 @@
-import axios from "axios";
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const result = await axios.post(
-      "/user/login",
-      {
-        email: data.email,
-        password: data.password,
-      },
-      { withCredentials: true }
-    );
-    console.log(result);
-  };
+  const { handlerLogin } = useAuth();
+  const navigate = useNavigate();
+  const { isAuthenticate } = useAuth();
+  useEffect(() => {
+    if (isAuthenticate) {
+      navigate("/");
+    }
+  }, [isAuthenticate]);
 
   return (
     <section className="w-full h-screen flex justify-center items-center gap-4 flex-col">
       <h2>Login</h2>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handlerLogin)}
         className="flex flex-col gap-6 border border-black p-6"
       >
         <input type="email" {...register("email")} placeholder="email" />
