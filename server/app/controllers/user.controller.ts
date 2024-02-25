@@ -118,11 +118,17 @@ const verifyToken = (req: Request, res: Response) => {
     if (err) return res.status(401).json(err);
 
     const findUser = await UserModel.findById(user.id);
-    if (findUser === null) return;
+    if (findUser === null)
+      return res.status(401).json({ message: "No se encontró el usuario" });
     res.status(200).json({
+      id: findUser.id,
       nombre: findUser.nombre,
       email: findUser.email,
       foto: findUser.fotoPerfil,
+      descripcion: findUser.descripcion,
+      motivoDonacion: findUser.motivoDonacion,
+      datos: findUser.datos,
+      isAdmin: findUser.isAdmin,
     });
   });
 };
