@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/perfil/:id" element={<Perfil />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </AuthProvider>
   </BrowserRouter>
