@@ -78,11 +78,21 @@ const deleteDatos = async (req: Request, res: Response) => {
 };
 
 const getAllDatos = async (req: Request, res: Response) => {
-  const allDatos = await DatosModel.find({ user: req.user?.id }).populate(
-    "user"
-  );
+  const allDatos = await DatosModel.find();
 
   res.json(allDatos);
 };
 
-export { createDatos, updateDatos, deleteDatos, getAllDatos };
+const getDatos = async (req: Request, res: Response) => {
+  try {
+    const idUser = req.user?.id;
+    const datosUser = await DatosModel.find({
+      user: idUser,
+    });
+    res.status(200).json(datosUser);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+export { createDatos, updateDatos, deleteDatos, getAllDatos, getDatos };
