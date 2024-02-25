@@ -25,9 +25,9 @@ const login = async (req: Request, res: Response) => {
       secure: false,
     });
     res.status(200).json({
-      message: "Usuario logueado",
       nombre: findUser.nombre,
       email: findUser.email,
+      foto: findUser.fotoPerfil,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -126,4 +126,18 @@ const verifyToken = (req: Request, res: Response) => {
     });
   });
 };
-export { login, createUser, allUsers, editarPerfil, perfilUser, verifyToken };
+
+const logout = (req: Request, res: Response) => {
+  res.clearCookie("userLoginToken");
+  res.status(200).json("Usuario deslogueado!");
+};
+
+export {
+  login,
+  createUser,
+  allUsers,
+  editarPerfil,
+  perfilUser,
+  verifyToken,
+  logout,
+};
