@@ -33,17 +33,17 @@ const createUserValidation = (
 };
 
 const loginValidation = (req: Request, res: Response, next: NextFunction) => {
-  const { nombre, email } = req.body;
+  const { password, email } = req.body;
   const SchemaValidation = z.object({
     email: z.string().email({ message: "El email no es válido" }),
-    nombre: z
+    password: z
       .string()
       .min(3, { message: "Minimo 3 letras" })
       .max(8, { message: "Máximo 8 letras" }),
   });
 
   try {
-    SchemaValidation.parse({ nombre, email });
+    SchemaValidation.parse({ password, email });
 
     next();
   } catch (error) {

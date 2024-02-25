@@ -16,7 +16,7 @@ import {
 const userRouter = Router();
 
 userRouter.post("/createUser", createUserValidation, createUser);
-userRouter.post("/login", loginValidation, login);
+userRouter.post("/login", login);
 userRouter.get("/allUser", allUsers);
 userRouter.put("/:id", editarPerfil);
 userRouter.get("/perfil", authRequired, perfilUser);
