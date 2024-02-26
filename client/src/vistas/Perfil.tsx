@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function Perfil() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const { isAuthenticate } = useAuth();
+  const { isAuthenticate, handlerEditPerfil } = useAuth();
+
   useEffect(() => {
     if (!isAuthenticate) {
       return navigate("/");
     }
   }, [isAuthenticate]);
 
-  const handlerSubmit = (data: FieldValues) => {
-    console.log(data);
-  };
   return (
     <section>
-      <form onSubmit={handleSubmit(handlerSubmit)}>
+      <form onSubmit={handleSubmit(handlerEditPerfil)}>
         <input
           type="text"
           placeholder="descripcion"
