@@ -73,6 +73,8 @@ const editarPerfil = async (req: Request, res: Response) => {
   try {
     const { descripcion, motivoDonacion, nombre } = req.body;
     const { id } = req.params;
+
+    // Actualiza el perfil
     await UserModel.findByIdAndUpdate(id, {
       descripcion,
       motivoDonacion,
@@ -83,7 +85,6 @@ const editarPerfil = async (req: Request, res: Response) => {
       if (Array.isArray(req.files.image)) {
       } else {
         const result = await uploadImagen(req.files.image.tempFilePath);
-
         await UserModel.findByIdAndUpdate(id, {
           fotoPerfil: {
             public_id: result.public_id,
@@ -91,11 +92,15 @@ const editarPerfil = async (req: Request, res: Response) => {
           },
         });
 
+        // Eliminar el archivo temporal de la imagen
         await fs.unlink(req.files.image.tempFilePath);
       }
     }
 
-    res.json({ message: "Perfil editado" });
+    // Consultar el perfil actualizado
+    const perfilActualizado = await UserModel.findById(id);
+
+    res.json(perfilActualizado);
   } catch (error) {
     res.status(400).json(error);
   }
