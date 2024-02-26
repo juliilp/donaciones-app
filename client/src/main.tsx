@@ -9,19 +9,22 @@ import Perfil from "./vistas/Perfil";
 import axios from "axios";
 import Header from "./components/Header/Header";
 import AuthProvider from "./context/AuthProvider";
+import UserProvider from "./context/UserProvider";
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <AuthProvider>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/perfil" element={<Perfil />} />
-      </Routes>
+      <UserProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/perfil" element={<Perfil />} />
+        </Routes>
+      </UserProvider>
     </AuthProvider>
   </BrowserRouter>
 );
