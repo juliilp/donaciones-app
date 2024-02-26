@@ -1,4 +1,4 @@
-import useUser from "../hooks/useUser";
+import useAuth from "../hooks/useAuth";
 import { IPerfilCardDatos } from "../interface/IPerfilCardDatos.interface";
 
 export default function PerfilCardDatos({
@@ -8,7 +8,7 @@ export default function PerfilCardDatos({
   Plataforma,
   _id,
 }: IPerfilCardDatos) {
-  const { handlerEliminarDatos } = useUser();
+  const { handlerEliminarDatos } = useAuth();
   return (
     <article className="flex flex-col gap-3 border border-black p-4" key={_id}>
       <span>Alias: {Alias}</span>
