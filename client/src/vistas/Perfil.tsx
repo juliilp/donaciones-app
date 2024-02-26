@@ -4,16 +4,20 @@ import useAuth from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import PerfilCardDatos from "../components/PerfilCardDatos";
 import { IPerfilCardDatos } from "../interface/IPerfilCardDatos.interface";
-import useUser from "../hooks/useUser";
+import axios from "axios";
 
 export default function Perfil() {
-  const { handlerCrearDatos } = useUser();
   const { register: perfil, handleSubmit: handlerPerfil } = useForm();
   const { register: registerDatos, handleSubmit: handlerDatos } = useForm();
 
   const navigate = useNavigate();
-  const { isAuthenticate, handlerEditPerfil } = useAuth();
-  const { datos } = useUser();
+  const {
+    isAuthenticate,
+    handlerEditPerfil,
+    datos,
+    handlerCrearDatos,
+    setDatos,
+  } = useAuth();
 
   const [switchNuevoMetodoDePago, setSwitchNuevoMetodoDePago] =
     useState<boolean>(false);
@@ -24,6 +28,13 @@ export default function Perfil() {
     }
   }, [isAuthenticate]);
 
+  useEffect(() => {
+    async function actualizarDatos() {
+      const res = await axios("/datos");
+      setDatos(res.data);
+    }
+    actualizarDatos();
+  }, []);
   return (
     <section className="w-full h-screen relative ">
       <form
