@@ -9,6 +9,11 @@ export interface IUser {
   email: string;
   foto: IFoto;
   nombre: string;
+  id: string;
+  isAdmin: boolean;
+  motivoDonacion: string;
+  description: string;
+  datos: any[];
 }
 
 export interface IAuthProvider {
@@ -16,4 +21,5 @@ export interface IAuthProvider {
   isAuthenticate?: boolean;
   handlerCerrarSesion?: () => void;
   handlerLogin: SubmitHandler<FieldValues>;
+  handlerEditPerfil: SubmitHandler<FieldValues>;
 }

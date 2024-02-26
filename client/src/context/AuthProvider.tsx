@@ -67,11 +67,48 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const handlerEditPerfil: SubmitHandler<FieldValues> = async (
+    data: FieldValues
+  ) => {
+    try {
+      const formData = new FormData();
+
+      formData.append(
+        "descripcion",
+        data.descripcion ? data.nombre : user.nombre
+      );
+      formData.append(
+        "motivoDonacion",
+        data.motivoDonacion ? data.nombre : user.nombre
+      );
+      formData.append("nombre", data.nombre ? data.nombre : user.nombre);
+      formData.append("image", data.fotoPerfil[0]);
+
+      const res = await axios.put(`/user/${user.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.status === 200) {
+        setUser({
+          ...user,
+          descripcion: res.data.descripcion,
+          motivoDonacion: res.data.motivodonacion,
+          nombre: res.data.nombre,
+          foto: res.data.fotoPerfil,
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
   const initialValue: IAuthProvider = {
     user,
     isAuthenticate,
     handlerCerrarSesion,
     handlerLogin,
+    handlerEditPerfil,
   };
   return (
     <AuthContext.Provider value={initialValue}>{children}</AuthContext.Provider>
