@@ -8,7 +8,11 @@ import axios from "axios";
 
 export default function Perfil() {
   const { register: perfil, handleSubmit: handlerPerfil } = useForm();
-  const { register: registerDatos, handleSubmit: handlerDatos } = useForm();
+  const {
+    register: registerDatos,
+    handleSubmit: handlerDatos,
+    reset: resetDatos,
+  } = useForm();
 
   const navigate = useNavigate();
   const {
@@ -82,7 +86,11 @@ export default function Perfil() {
         <section className="absolute flex justify-center items-center top-0 bottom-0 right-0 left-0 bg-opacity-50 bg-gray-700">
           <form
             className="flex flex-col gap-3 border border-black p-3 relative"
-            onSubmit={handlerDatos(handlerCrearDatos)}
+            onSubmit={handlerDatos((data) => {
+              handlerCrearDatos(data);
+              setSwitchNuevoMetodoDePago((prev) => !prev);
+              resetDatos();
+            })}
           >
             <input type="text" placeholder="CVU" {...registerDatos("CVU")} />
             <input
