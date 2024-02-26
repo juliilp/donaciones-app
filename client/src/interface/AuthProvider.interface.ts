@@ -22,4 +22,8 @@ export interface IAuthProvider {
   handlerCerrarSesion?: () => void;
   handlerLogin: SubmitHandler<FieldValues>;
   handlerEditPerfil: SubmitHandler<FieldValues>;
+  handlerEliminarDatos: (_id: string) => void;
+  handlerCrearDatos: SubmitHandler<FieldValues>;
+  datos: any;
+  setDatos: any;
 }

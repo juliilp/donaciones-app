@@ -4,6 +4,7 @@ import { IAuthProvider } from "../interface/AuthProvider.interface";
 import axios from "axios";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { IPerfilCardDatos } from "../interface/IPerfilCardDatos.interface";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ interface AuthProviderProps {
 export const AuthContext = createContext<IAuthProvider | null>(null);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [datos, setDatos] = useState<IPerfilCardDatos[]>([]);
   const [user, setUser] = useState<any>(null);
   const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -33,6 +35,11 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
       guardarUsuario();
     }
+    async function getDatos() {
+      const result = await axios("/datos");
+      setDatos(result.data);
+    }
+    getDatos();
   }, []);
 
   const handlerCerrarSesion = () => {
@@ -40,6 +47,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await axios("/user/logout");
       setUser(null);
       setIsAuthenticate(false);
+      setDatos([]);
     }
     cerrarSesion();
   };
@@ -103,12 +111,39 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       console.error("Error submitting form:", error);
     }
   };
+
+  const handlerCrearDatos: SubmitHandler<FieldValues> = async (data) => {
+    const result = await axios.post("/datos/", {
+      Cuil: data.Cuil,
+      CVU: data.CVU,
+      Alias: data.Alias,
+      Plataforma: data.Plataforma,
+    });
+
+    const dataResult: IPerfilCardDatos = result.data;
+    setDatos([...datos, dataResult]);
+  };
+  const handlerEliminarDatos = async (_id: string) => {
+    const switchConfirm = confirm("Estas seguro de eliminarlo?");
+    if (switchConfirm) {
+      const res = await axios.delete(`/datos/${_id}`);
+      if (res.status === 200) {
+        const datosFiltrados = datos.filter((d) => d._id !== _id);
+        setDatos(datosFiltrados);
+      }
+    }
+  };
+
   const initialValue: IAuthProvider = {
     user,
     isAuthenticate,
     handlerCerrarSesion,
     handlerLogin,
     handlerEditPerfil,
+    datos,
+    handlerCrearDatos,
+    handlerEliminarDatos,
+    setDatos,
   };
   return (
     <AuthContext.Provider value={initialValue}>{children}</AuthContext.Provider>

@@ -4,4 +4,5 @@ export interface IUserProvider {
   handlerEliminarDatos: (_id: string) => void;
   handlerCrearDatos: SubmitHandler<FieldValues>;
   datos: any;
+  setDatos: any;
 }
