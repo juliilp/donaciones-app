@@ -1,21 +1,6 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IDatos } from "./Datos.interface";
-
-interface IFoto {
-  public_id: string;
-  secure_url: string;
-}
-
-export interface IUser {
-  email: string;
-  foto: IFoto;
-  nombre: string;
-  id: string;
-  isAdmin: boolean;
-  motivoDonacion: string;
-  description: string;
-  datos: any[];
-}
+import { IUser } from "./IUser.interface";
 
 export interface IAuthProvider {
   user?: IUser;
