@@ -8,6 +8,8 @@ import axios from "axios";
 
 export default function Perfil() {
   const { register: perfil, handleSubmit: handlerPerfil } = useForm();
+  const [switchNuevoMetodoDePago, setSwitchNuevoMetodoDePago] =
+    useState<boolean>(false);
   const {
     register: registerDatos,
     handleSubmit: handlerDatos,
@@ -23,9 +25,6 @@ export default function Perfil() {
     setDatos,
   } = useAuth();
 
-  const [switchNuevoMetodoDePago, setSwitchNuevoMetodoDePago] =
-    useState<boolean>(false);
-
   useEffect(() => {
     if (!isAuthenticate) {
       return navigate("/");
@@ -39,6 +38,7 @@ export default function Perfil() {
     }
     actualizarDatos();
   }, []);
+
   return (
     <section className="w-full h-screen relative ">
       <form
@@ -80,7 +80,7 @@ export default function Perfil() {
         className="block"
         onClick={() => setSwitchNuevoMetodoDePago((prev) => !prev)}
       >
-        ➕ Añadir método de pago{" "}
+        ➕ Añadir método de pago
       </button>
       {switchNuevoMetodoDePago && (
         <section className="absolute flex justify-center items-center top-0 bottom-0 right-0 left-0 bg-opacity-50 bg-gray-700">

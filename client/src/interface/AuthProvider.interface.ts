@@ -1,4 +1,5 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { IDatos } from "./Datos.interface";
 
 interface IFoto {
   public_id: string;
@@ -26,4 +27,5 @@ export interface IAuthProvider {
   handlerCrearDatos: SubmitHandler<FieldValues>;
   datos: any;
   setDatos: any;
+  handlerEditDatos: (datos: IDatos) => void;
 }

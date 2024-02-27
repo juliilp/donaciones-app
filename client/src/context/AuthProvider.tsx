@@ -5,6 +5,7 @@ import axios from "axios";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { IPerfilCardDatos } from "../interface/IPerfilCardDatos.interface";
+import { IDatos } from "../interface/Datos.interface";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -134,6 +135,25 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const handlerEditDatos = async ({
+    Alias,
+    CVU,
+    Cuil,
+    Plataforma,
+    _id,
+  }: IDatos) => {
+    const res = await axios.put(`/datos/${_id}`, {
+      Cuil,
+      CVU,
+      Alias,
+      Plataforma,
+    });
+
+    const filterDatos = datos.filter((d) => d._id !== _id);
+    if (res.status === 200) {
+      setDatos([...filterDatos, res.data]);
+    }
+  };
   const initialValue: IAuthProvider = {
     user,
     isAuthenticate,
@@ -144,6 +164,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     handlerCrearDatos,
     handlerEliminarDatos,
     setDatos,
+    handlerEditDatos,
   };
   return (
     <AuthContext.Provider value={initialValue}>{children}</AuthContext.Provider>
