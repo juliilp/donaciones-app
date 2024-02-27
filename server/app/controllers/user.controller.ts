@@ -143,6 +143,20 @@ const logout = (req: Request, res: Response) => {
   res.status(200).json("Usuario deslogueado!");
 };
 
+const userId = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const findUser = await UserModel.findById(id);
+    if (!findUser)
+      return res
+        .status(401)
+        .json({ message: "No se encontró el usuario con el id: " + id });
+    res.status(200).json(findUser);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 export {
   login,
   createUser,
@@ -151,4 +165,5 @@ export {
   perfilUser,
   verifyToken,
   logout,
+  userId,
 };

@@ -7,19 +7,17 @@ import {
   perfilUser,
   verifyToken,
   logout,
+  userId,
 } from "../controllers/user.controller";
 import authRequired from "../middlewares/authRequired";
-import {
-  createUserValidation,
-  editarPerfilValidation,
-  loginValidation,
-} from "../validations/user.validations";
+import { createUserValidation } from "../validations/user.validations";
 
 const userRouter = Router();
 
 userRouter.post("/createUser", createUserValidation, createUser);
 userRouter.post("/login", login);
-userRouter.get("/allUser", allUsers);
+userRouter.get("/", allUsers);
+userRouter.get("/userId/:id", userId);
 userRouter.put("/:id", editarPerfil);
 userRouter.get("/perfil", authRequired, perfilUser);
 userRouter.get("/verify", verifyToken);
