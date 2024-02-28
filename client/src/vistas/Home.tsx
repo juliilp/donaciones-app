@@ -19,6 +19,7 @@ export default function Home() {
             nombre={u.nombre}
             fotoPerfil={u.fotoPerfil}
             description={u.description}
+            id={u._id}
             key={index}
           />
         );

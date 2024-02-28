@@ -12,7 +12,7 @@ export default function NavbarDesktop() {
           <li>
             <Link to="/perfil">
               <img
-                src={user?.foto.secure_url}
+                src={user?.fotoPerfil.secure_url}
                 alt="ImagenPerfil"
                 className="rounded-full size-16"
               />

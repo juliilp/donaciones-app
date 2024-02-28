@@ -1,4 +1,9 @@
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  FieldValues,
+  FieldError,
+} from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,20 +14,26 @@ export default function Registro() {
     handleSubmit,
   } = useForm();
   const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
-    const res = await axios.post(
-      "/user/createUser",
-      {
-        nombre: data.nombre,
-        email: data.email,
-        password: data.password,
-      },
-      { withCredentials: true }
-    );
-    console.log(res);
-    navigate("/");
+    try {
+      const res = await axios.post(
+        "/user/createUser",
+        {
+          nombre: data.nombre,
+          email: data.email,
+          password: data.password,
+        },
+        { withCredentials: true }
+      );
+      console.log(res);
+      navigate("/");
+    } catch (error) {
+      console.error("Error during form submission", error);
+    }
   };
+
   return (
     <section className="w-full h-screen flex justify-center items-center">
       <form
@@ -45,7 +56,9 @@ export default function Registro() {
           })}
         />
         {errors.nombre && (
-          <span className="text-sm text-red-500">{errors.nombre?.message}</span>
+          <span className="text-sm text-red-500">
+            {(errors.nombre as FieldError)?.message}
+          </span>
         )}
         <input
           type="email"
@@ -60,7 +73,9 @@ export default function Registro() {
           })}
         />
         {errors.email && (
-          <span className="text-sm text-red-500">{errors.email.message}</span>
+          <span className="text-sm text-red-500">
+            {(errors.email as FieldError)?.message}
+          </span>
         )}
         <input
           type="password"
@@ -73,10 +88,10 @@ export default function Registro() {
         />
         {errors.password && (
           <span className="text-sm text-red-500">
-            {errors.password.message}
+            {(errors.password as FieldError)?.message}
           </span>
         )}
-        <button>Enviar</button>
+        <button type="submit">Enviar</button>
       </form>
     </section>
   );

@@ -9,7 +9,7 @@ export interface IUser {
   email: string;
   fotoPerfil: IFoto;
   nombre: string;
-  id: string;
+  _id: string;
   isAdmin: boolean;
   motivoDonacion: string;
   description: string;
