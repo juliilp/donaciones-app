@@ -11,6 +11,8 @@ import Header from "./components/Header/Header";
 import AuthProvider from "./context/AuthProvider";
 import PerfilDetail from "./vistas/PerfilDetail";
 
+
+
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
 ReactDOM.createRoot(document.getElementById("root")!).render(
